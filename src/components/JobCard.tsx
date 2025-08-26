@@ -56,12 +56,13 @@ export function JobCard({ job, onEdit, onDelete, onView }: JobCardProps) {
 console.log("job_data",job )
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Stack gap="md" style={{
+      <Stack gap="sm" style={{
         flex: 1,
         justifyContent:"center",
         alignContent:"center"
       }}>
         <Group justify="space-between" align="flex-start">
+        
           <div style={{ flex: 1 }}>
             <Text fw={600} size="lg" lineClamp={2}>
               {job.title || 'Untitled Job'}
@@ -69,6 +70,11 @@ console.log("job_data",job )
             <Text c="dimmed" size="sm" mt={4}>
               {job.companyName || 'Unknown Company'}
             </Text>
+          </div>
+            <div>
+                 <Badge color={getJobTypeColor(job.jobType)} variant="light">
+           24h Ago
+          </Badge>
           </div>
           <Group gap="xs">
             {onView && (

@@ -1,27 +1,41 @@
-import { Grid, TextInput, Select, Card, Title, Button, Group } from '@mantine/core';
-import { IconSearch, IconMapPin, IconBriefcase, IconRefresh } from '@tabler/icons-react';
+
+import {
+  Group,
+  TextInput,
+  Select,
+  Divider,
+  RangeSlider,
+  Text,
+  Box,
+} from '@mantine/core';
+import {
+  IconSearch,
+  IconMapPin,
+  IconBriefcase,
+} from '@tabler/icons-react';
 import { useState } from 'react';
 import { JobFilters } from '@/types/job';
 
 interface JobFiltersProps {
   onFiltersChange: (filters: JobFilters) => void;
-  loading?: boolean;
 }
 
 const JOB_TYPES = [
-  { value: '', label: 'All Types' },
+  { value: 'Job Types', label: 'All Types' },
   { value: 'full-time', label: 'Full-time' },
   { value: 'part-time', label: 'Part-time' },
   { value: 'contract', label: 'Contract' },
   { value: 'internship', label: 'Internship' },
 ];
 
-export function JobFiltersComponent({ onFiltersChange, loading }: JobFiltersProps) {
+export function JobFiltersComponent({ onFiltersChange }: JobFiltersProps) {
   const [filters, setFilters] = useState<JobFilters>({
     title: '',
     location: '',
     jobType: '',
   });
+
+  const [salary, setSalary] = useState<[number, number]>([50000, 80000]);
 
   const handleFilterChange = (key: keyof JobFilters, value: any) => {
     const newFilters = { ...filters, [key]: value };
@@ -29,62 +43,102 @@ export function JobFiltersComponent({ onFiltersChange, loading }: JobFiltersProp
     onFiltersChange(newFilters);
   };
 
-  const resetFilters = () => {
-    const resetFilters = {
-      title: '',
-      location: '',
-      jobType: '',
-    };
-    setFilters(resetFilters);
-    onFiltersChange(resetFilters);
-  };
-
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder mb="xl">
-      <Group justify="space-between" mb="md">
-        <Title order={4}>Filter Jobs</Title>
-        <Button
-          variant="light"
-          size="sm"
-          leftSection={<IconRefresh size={14} />}
-          onClick={resetFilters}
-        >
-          Reset
-        </Button>
-      </Group>
-
-      <Grid>
-        <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+<Box
+  style={{
+    fontFamily: 'Satoshi Variable, sans-serif',
+    border: '1px solid #eaeaea',
+    borderRadius: '12px',
+    backgroundColor: 'white',
+    padding: '16px 24px',
+    width: '100%',         // use full parent/container width
+    boxSizing: 'border-box',
+  }}
+> 
+      <Group gap="xl" justify="space-between" wrap="nowrap" >
+        {/* Search Title */}
+        <Group gap="xs" style={{ flex: 1 }}>
+          <IconSearch size={18} />
           <TextInput
-            label="Job Title"
-            placeholder="Search by job title..."
-            leftSection={<IconSearch size={16} />}
+            placeholder="Search By Job Title, Role"
+            variant="unstyled"
             value={filters.title}
-            onChange={(event) => handleFilterChange('title', event.currentTarget.value)}
+            onChange={(event) =>
+              handleFilterChange('title', event.currentTarget.value)
+            }
+            style={{ flex: 1 }}
           />
-        </Grid.Col>
+        </Group>
 
-        <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
-          <TextInput
-            label="Location"
-            placeholder="Search by location..."
-            leftSection={<IconMapPin size={16} />}
-            value={filters.location}
-            onChange={(event) => handleFilterChange('location', event.currentTarget.value)}
-          />
-        </Grid.Col>
+        <Divider orientation="vertical" />
 
-        <Grid.Col span={{ base: 12, sm: 6, md: 4 }}>
+        {/* Location */}
+        <Group gap="xs" style={{ flex: 1 }}>
+          <IconMapPin size={18} />
           <Select
-            label="Job Type"
-            placeholder="Select job type..."
-            leftSection={<IconBriefcase size={16} />}
+            placeholder="Preferred Location"
+            variant="unstyled"
+            data={[
+              { value: 'remote', label: 'Remote' },
+              { value: 'onsite', label: 'Onsite' },
+              { value: 'hybrid', label: 'Hybrid' },
+            ]}
+            value={filters.location}
+            onChange={(value) => handleFilterChange('location', value || '')}
+            style={{ flex: 1 }}
+          />
+        </Group>
+
+        <Divider orientation="vertical" />
+
+        {/* Job Type */}
+        <Group gap="xs" style={{ flex: 1 }}>
+          <IconBriefcase size={18} />
+          <Select
+            placeholder="Job type"
+            variant="unstyled"
             data={JOB_TYPES}
             value={filters.jobType}
             onChange={(value) => handleFilterChange('jobType', value || '')}
+            style={{ flex: 1 }}
           />
-        </Grid.Col>
-      </Grid>
-    </Card>
+        </Group>
+
+        <Divider orientation="vertical" />
+
+        {/* Salary Range */}
+        <Group gap="sm" style={{ flex: 2 }}>
+            <Text size="sm" c="black">
+              Salary Per Month
+            </Text>
+
+            <RangeSlider
+              min={10000}
+              max={200000}
+              step={5000}
+              value={salary}
+              onChange={setSalary}
+              style={{ flex: 1 }}
+              styles={{
+                bar: {
+                  border: "2px solid #222222", // black border
+                  backgroundColor: "#222222",  // filled line color
+                  height: "0px",               // keep it thin
+                  opacity: 1,
+                },
+                track: {
+                  height: "0px",               // base track line thin as well
+                },
+                thumb: {
+                  borderColor: "#222222",
+                  backgroundColor: "#222222",
+                },
+              }}
+            />
+
+            <Text size="sm">{`₹${salary[0] / 1000}k - ₹${salary[1] / 1000}k`}</Text>
+          </Group>
+        </Group>
+      </Box>
   );
 }

@@ -1,8 +1,10 @@
-import { AppShell, Container, Group, Button, Text } from '@mantine/core';
+import { AppShell, Container, Group, Button, Text, ColorInput } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import CreateJD from './CenterModal';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -10,9 +12,10 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const router = useRouter();
+  const [opened, { close, open }] = useDisclosure(true);
 
   const navLinks = [
-    { href: '/', label: 'Home' },
+    { href: '/jobs', label: 'Home' },
     { href: '/jobs', label: 'Find Jobs' },
     { href: '/find-talents', label: 'Find Talents' },
     { href: '/about-us', label: 'About us' },
@@ -44,25 +47,37 @@ export function Layout({ children }: LayoutProps) {
               <Group>
                 {navLinks.map((link) => (
                   <Button
+                  className='text-black'
                     key={link.href}
                     component={Link}
                     href={link.href}
+                    style={{
+                      fontFamily: 'Satoshi Variable, sans-serif',
+                      fontWeight: 500,
+                      fontSize: '16px',
+                      color:   'black', 
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                    }}
                     variant={router.pathname === link.href ? 'subtle' : 'subtle'}
                   >
-                    {link.label}
+                    <span>{link.label}</span>
                   </Button>
                 ))}
               </Group>
               <Button
-                component={Link}
-                href="/jobs/create"
+
                 leftSection={<IconPlus size={16} />}
-                variant="filled"
-                color="violet"
+                variant="gradient"
+                gradient={{ from: "#A128FF", to: "#6100AD", deg: 90 }}
                 radius={100}
+                onClick={open}
               >
                 Create Jobs
               </Button>
+              <>
+              <CreateJD open={open} opened={opened} close={close} />
+              </>
             </Group>
           </Container>
         </AppShell.Header>

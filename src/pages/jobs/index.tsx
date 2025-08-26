@@ -40,10 +40,13 @@ const JobsPage: React.FC = () => {
   };
 
   return (
+
+     <div >
+       <JobFiltersComponent onFiltersChange={handleFiltersChange} loading={loading} />
     <Container size="xl" py="md">
    
 
-      <JobFiltersComponent onFiltersChange={handleFiltersChange} loading={loading} />
+    
 
       {loading && (
         <Center mt="xl">
@@ -72,6 +75,7 @@ const JobsPage: React.FC = () => {
         </SimpleGrid>
       )}
     </Container>
+     </div>
   );
 };
 

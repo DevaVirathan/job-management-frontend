@@ -21,7 +21,7 @@ export default function CreateJobPage() {
       // Validate data on client side
       const validationErrors = validateJobData(formData);
       if (validationErrors.length > 0) {
-        notifications.show({
+        no<JobFormtifications.show({
           title: 'Validation Error',
           message: validationErrors.join(', '),
           color: 'red',

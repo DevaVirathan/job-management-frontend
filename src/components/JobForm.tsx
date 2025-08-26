@@ -58,13 +58,13 @@ export function JobForm({ onSubmit, loading, initialData }: JobFormProps) {
   };
 
   return (
-    <Card shadow="sm" padding="xl" radius="md" withBorder>
+    <Card shadow="sm" padding="xl" radius="md">
       <Title order={2} mb="xl">
-        Create New Job Posting
+      <p className='text-center'> Create New Job Posting</p>
       </Title>
 
-      <form onSubmit={handleSubmit(handleFormSubmit)}>
-        <Stack gap="lg">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack gap="sm">
           <Grid>
             <Grid.Col span={{ base: 12, sm: 6 }}>
               <TextInput
