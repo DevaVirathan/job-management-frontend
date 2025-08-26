@@ -1,14 +1,32 @@
+
+/* Import Satoshi font from Fontshare */
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap');
+
 :root {
-  color-scheme: var(--mantine-color-scheme);
+  --satoshi-font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 body {
-  font-family: var(--mantine-font-family);
+  font-family: var(--satoshi-font-family);
   font-size: var(--mantine-font-size-md);
   line-height: var(--mantine-line-height);
   background-color: var(--mantine-color-body);
   color: var(--mantine-color-text);
 
-  -webkit-font-smoothing: var(--mantine-webkit-font-smoothing);
-  -moz-osx-font-smoothing: var(--mantine-moz-font-smoothing);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.hidden-asterisk {
+  display: none;
+}
+
+.mantine-Title-root,
+.mantine-Text-root,
+.mantine-Input-input,
+.mantine-Select-input,
+.mantine-Textarea-input,
+.mantine-Button-root,
+.mantine-Badge-root {
+  font-family: var(--satoshi-font-family) !important;
 }

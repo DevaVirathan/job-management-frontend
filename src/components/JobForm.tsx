@@ -12,7 +12,10 @@ import {
 import { DateInput } from '@mantine/dates';
 import { useForm, Controller } from 'react-hook-form';
 import { CreateJobRequest } from '@/types/job';
-import { IconBriefcase, IconBuilding, IconMapPin, IconCurrencyDollar } from '@tabler/icons-react';
+import { IconBriefcase, IconBuilding, IconMapPin, IconCurrencyDollar, IconArrowRight } from '@tabler/icons-react';
+import { MdKeyboardDoubleArrowDown, MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { LuArrowDownUp } from "react-icons/lu";
+import { CiCalendar } from "react-icons/ci";
 import dayjs from 'dayjs';
 
 interface JobFormProps {
@@ -38,13 +41,11 @@ export function JobForm({ onSubmit, loading, initialData }: JobFormProps) {
   } = useForm<CreateJobRequest>({
     defaultValues: {
       title: initialData?.title || '',
-      company: initialData?.company || '',
+      companyName: initialData?.companyName || '',
       location: initialData?.location || '',
       jobType: initialData?.jobType || 'full-time',
       salaryRange: initialData?.salaryRange || '',
-      description: initialData?.description || '',
-      requirements: initialData?.requirements || '',
-      responsibilities: initialData?.responsibilities || '',
+      jobDescription: initialData?.jobDescription || '',
       applicationDeadline: initialData?.applicationDeadline || '',
     },
   });
@@ -53,178 +54,213 @@ export function JobForm({ onSubmit, loading, initialData }: JobFormProps) {
     onSubmit(data);
   };
 
-  const handleReset = () => {
-    reset();
-  };
 
   return (
-    <Card shadow="sm" padding="xl" radius="md">
-      <Title order={2} mb="xl">
-      <p className='text-center'> Create New Job Posting</p>
+    <Card shadow="sm" padding="xl" radius="md" >
+      <Title order={2} mb="l" style={{ 
+        textAlign: 'center',
+        fontWeight: 700,
+        fontSize: '24px',
+        color: '#222222',
+      }}>
+           Create Job Opening
       </Title>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack gap="sm">
           <Grid>
+            {/* Job Title */}
             <Grid.Col span={{ base: 12, sm: 6 }}>
               <TextInput
                 label="Job Title"
                 placeholder="e.g., Senior Frontend Developer"
                 leftSection={<IconBriefcase size={16} />}
-                withAsterisk
                 error={errors.title?.message}
-                {...register('title', {
-                  required: 'Job title is required',
-                  minLength: {
-                    value: 2,
-                    message: 'Job title must be at least 2 characters',
+                {...register('title', { required: 'Job title is required' })}
+                styles={{
+                  input: {
+                    height: "58px",
+                    borderRadius: "10px",
+                    border: "1px solid #222222",
+                    background: "#FFFFFF",
                   },
-                })}
+                }}
               />
             </Grid.Col>
 
+            {/* Company Name */}
             <Grid.Col span={{ base: 12, sm: 6 }}>
               <TextInput
                 label="Company Name"
                 placeholder="e.g., Tech Solutions Inc."
                 leftSection={<IconBuilding size={16} />}
-                withAsterisk
-                error={errors.company?.message}
-                {...register('company', {
-                  required: 'Company name is required',
-                  minLength: {
-                    value: 2,
-                    message: 'Company name must be at least 2 characters',
+                error={errors.companyName?.message}
+                {...register('companyName')}
+                styles={{
+                  input: {
+                    height: "58px",
+                    borderRadius: "10px",
+                    border: "1px solid #222222",
+                    background: "#FFFFFF",
                   },
-                })}
+                }}
               />
             </Grid.Col>
 
+            {/* Location */}
             <Grid.Col span={{ base: 12, sm: 6 }}>
               <TextInput
                 label="Location"
                 placeholder="e.g., New York, NY"
                 leftSection={<IconMapPin size={16} />}
-                withAsterisk
                 error={errors.location?.message}
-                {...register('location', {
-                  required: 'Location is required',
-                })}
+                {...register('location')}
+                styles={{
+                  input: {
+                    height: "58px",
+                    borderRadius: "10px",
+                    border: "1px solid #222222",
+                    background: "#FFFFFF",
+                  },
+                }}
               />
             </Grid.Col>
 
+            {/* Job Type */}
             <Grid.Col span={{ base: 12, sm: 6 }}>
               <Controller
                 name="jobType"
                 control={control}
-                rules={{ required: 'Job type is required' }}
                 render={({ field }) => (
                   <Select
                     label="Job Type"
-                    placeholder="Select job type"
+                    placeholder="Full Time"
                     data={JOB_TYPES}
-                    withAsterisk
                     error={errors.jobType?.message}
                     {...field}
+                    styles={{
+                      input: {
+                        height: "58px",
+                        borderRadius: "10px",
+                        border: "1px solid #222222",
+                        background: "#FFFFFF",
+                      },
+                    }}
                   />
                 )}
               />
             </Grid.Col>
 
+            {/* Salary Range */}
             <Grid.Col span={{ base: 12, sm: 6 }}>
-              <TextInput
-                label="Salary Range"
-                placeholder="e.g., $80k - $120k"
-                leftSection={<IconCurrencyDollar size={16} />}
-                withAsterisk
-                error={errors.salaryRange?.message}
-                {...register('salaryRange', {
-                  required: 'Salary range is required',
-                })}
-              />
+              <label>Salary Range</label>
+              <Group grow>
+                <TextInput
+                  placeholder="₹ 0"
+                  leftSection={<LuArrowDownUp size={16} />}
+                  styles={{
+                    input: {
+                      height: "58px",
+                      borderRadius: "10px",
+                      border: "1px solid #222222",
+                      background: "#FFFFFF",
+                    },
+                  }}
+                />
+                <TextInput
+                  placeholder="₹ 12,00,000"
+                  leftSection={<LuArrowDownUp size={16} />}
+                  styles={{
+                    input: {
+                      height: "58px",
+                      borderRadius: "10px",
+                      border: "1px solid #222222",
+                      background: "#FFFFFF",
+                    },
+                  }}
+                />
+              </Group>
             </Grid.Col>
 
+            {/* Application Deadline */}
             <Grid.Col span={{ base: 12, sm: 6 }}>
               <Controller
                 name="applicationDeadline"
                 control={control}
-                rules={{
-                  required: 'Application deadline is required',
-                  validate: (value) => {
-                    if (dayjs(value).isBefore(dayjs(), 'day')) {
-                      return 'Deadline must be in the future';
-                    }
-                    return true;
-                  },
-                }}
                 render={({ field }) => (
                   <DateInput
                     label="Application Deadline"
                     placeholder="Select deadline date"
-                    withAsterisk
-                    error={errors.applicationDeadline?.message}
+                    rightSection={<CiCalendar size={16} />}
                     minDate={new Date()}
                     value={field.value ? new Date(field.value) : null}
                     onChange={(date) => field.onChange(date?.toISOString())}
+                    styles={{
+                      input: {
+                        height: "58px",
+                        borderRadius: "10px",
+                        border: "1px solid #222222",
+                        background: "#FFFFFF",
+                      },
+                    }}
                   />
                 )}
               />
             </Grid.Col>
+
+            {/* Job Description - full width */}
+            <Grid.Col span={12}>
+              <Textarea
+                label="Job Description"
+                placeholder="Provide a description to let the candidate know more about the job role"
+                minRows={4}
+                error={errors.jobDescription?.message}
+                styles={{
+                  input: {
+                    borderRadius: "10px",
+                    border: "1px solid #222222",
+                    background: "#FFFFFF",
+                    height: "200px",
+                  },
+                }}
+              />
+            </Grid.Col>
+
+            {/* Action Buttons */}
+            <Grid.Col span={12}>
+              <Group style={{justifyContent: 'space-between'}}>
+                <Button
+                  type="button"
+                  rightSection={<MdKeyboardDoubleArrowDown size={16} color="black" />}
+                  style={{
+                    width: "232px",
+                    height: "59px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #222222",
+                    background: "#FFFFFF",
+                    boxShadow: "0px 0px 4px 0px #00000040",
+                    color: "black",
+                  }}
+                >
+                  Save Draft
+                </Button>
+                <Button
+                  type="submit"
+                  loading={loading}
+                  rightSection={<MdKeyboardDoubleArrowRight size={16} color="white" />}
+                  style={{
+                    width: "207px",
+                    height: "59px",
+                    borderRadius: "10px",
+                    background: "#00AAFF",
+                  }}
+                >
+                  Publish
+                </Button>
+              </Group>
+            </Grid.Col>
           </Grid>
 
-          <Textarea
-            label="Job Description"
-            placeholder="Provide a detailed description of the job role..."
-            minRows={4}
-            withAsterisk
-            error={errors.description?.message}
-            {...register('description', {
-              required: 'Job description is required',
-              minLength: {
-                value: 50,
-                message: 'Description must be at least 50 characters',
-              },
-            })}
-          />
-
-          <Textarea
-            label="Requirements"
-            placeholder="List the required qualifications and skills..."
-            minRows={3}
-            withAsterisk
-            error={errors.requirements?.message}
-            {...register('requirements', {
-              required: 'Requirements are required',
-              minLength: {
-                value: 20,
-                message: 'Requirements must be at least 20 characters',
-              },
-            })}
-          />
-
-          <Textarea
-            label="Responsibilities"
-            placeholder="Describe the main responsibilities..."
-            minRows={3}
-            withAsterisk
-            error={errors.responsibilities?.message}
-            {...register('responsibilities', {
-              required: 'Responsibilities are required',
-              minLength: {
-                value: 20,
-                message: 'Responsibilities must be at least 20 characters',
-              },
-            })}
-          />
-
-          <Group justify="flex-end" mt="xl">
-            <Button type="button" variant="light" onClick={handleReset}>
-              Reset Form
-            </Button>
-            <Button type="submit" loading={loading} size="md">
-              Create Job Posting
-            </Button>
-          </Group>
         </Stack>
       </form>
     </Card>

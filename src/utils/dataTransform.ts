@@ -8,13 +8,11 @@ export const transformJobDataForAPI = (formData: JobFormData): CreateJobRequest 
   // Transform to match your NestJS backend DTO exactly
   const transformed: CreateJobRequest = {
     title: formData.title?.trim(),
-    companyName: formData.company?.trim(), // Map 'company' to 'companyName'
+    companyName: formData.companyName?.trim(), // Map 'company' to 'companyName'
     location: formData.location?.trim(),
     jobType: formData.jobType,
     salaryRange: formData.salaryRange?.trim(),
-    jobDescription: formData.description?.trim(), // Map 'description' to 'jobDescription'
-    requirements: formData.requirements?.trim(),
-    responsibilities: formData.responsibilities?.trim(),
+    jobDescription: formData.jobDescription?.trim(), // Map 'description' to 'jobDescription'
     applicationDeadline: formData.applicationDeadline,
   };
 
@@ -34,7 +32,7 @@ export const validateJobData = (data: JobFormData): string[] => {
 
   // Required fields based on your DTO
   if (!data.title?.trim()) errors.push('Title is required');
-  if (!data.company?.trim()) errors.push('Company is required');
+  if (!data.companyName?.trim()) errors.push('Company is required');
 
   // Optional fields validation (only if provided)
   if (data.location && data.location.length > 255) {
@@ -43,7 +41,7 @@ export const validateJobData = (data: JobFormData): string[] => {
   if (data.title && data.title.length > 255) {
     errors.push('Title must be less than 255 characters');
   }
-  if (data.company && data.company.length > 255) {
+  if (data.companyName && data.companyName.length > 255) {
     errors.push('Company name must be less than 255 characters');
   }
   if (data.salaryRange && data.salaryRange.length > 100) {

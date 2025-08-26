@@ -19,6 +19,12 @@ import {
 } from '@tabler/icons-react';
 import { Job } from '@/types/job';
 import dayjs from 'dayjs';
+import AvatarFallback from './AvatarFallback';
+import { IoIosApps } from "react-icons/io";
+import { GoPersonAdd } from "react-icons/go";
+import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
+
+
 
 interface JobCardProps {
   job: Job;
@@ -32,10 +38,9 @@ const JOB_TYPE_COLORS = {
   'part-time': 'green',
   'contract': 'orange',
   'internship': 'purple',
-  'other': 'gray', // fallback color
+  'other': 'gray', 
 } as const;
 
-// Helper function to safely format job type
 const formatJobType = (jobType: string | null | undefined): string => {
   if (!jobType) return 'Other';
   const formattedType = jobType.toLowerCase();
@@ -49,11 +54,11 @@ const getJobTypeColor = (jobType: string | null | undefined): string => {
   return JOB_TYPE_COLORS[normalizedType] || 'gray';
 };
 
-export function JobCard({ job, onEdit, onDelete, onView }: JobCardProps) {
-  const isDeadlineSoon = job.applicationDeadline 
+export function JobCard({ job }: JobCardProps) {
+  const isDeadlineSoon = job.applicationDeadline
     ? dayjs(job.applicationDeadline).diff(dayjs(), 'days') <= 7
     : false;
-console.log("job_data",job )
+  console.log("job_data", job)
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Stack gap="sm" style={{
@@ -64,65 +69,69 @@ console.log("job_data",job )
         <Group justify="space-between" align="flex-start">
         
           <div style={{ flex: 1 }}>
-            <Text fw={600} size="lg" lineClamp={2}>
-              {job.title || 'Untitled Job'}
-            </Text>
+            <AvatarFallback imageUrl={null} name={job.companyName}/>
+              <Text
+                style={{
+                  fontWeight: 700,        // bold
+                  fontSize: "20px",       // matches your note
+                  lineHeight: "100%",     // tighter spacing
+                  letterSpacing: "0",     // normal
+                  color: "#000000",       // black text
+                }}
+              />
+              <Text lineClamp={2}  fw={550}>
+                {job.title || "Untitled Job"}
+              </Text>
+
             <Text c="dimmed" size="sm" mt={4}>
-              {job.companyName || 'Unknown Company'}
+              {/* {job.companyName?.split("")?.map(n=>n.charAt(0).toUpperCase()) || 'Unknown Company'} */}
+              {job.companyName}
             </Text>
           </div>
-            <div>
-                 <Badge color={getJobTypeColor(job.jobType)} variant="light">
-           24h Ago
-          </Badge>
-          </div>
-          <Group gap="xs">
-            {onView && (
-              <Tooltip label="View Details">
-                <ActionIcon variant="light" color="blue" onClick={() => onView(job)}>
-                  <IconEye size={16} />
-                </ActionIcon>
-              </Tooltip>
-            )}
-            {onEdit && (
-              <Tooltip label="Edit Job">
-                <ActionIcon variant="light" color="orange" onClick={() => onEdit(job)}>
-                  <IconEdit size={16} />
-                </ActionIcon>
-              </Tooltip>
-            )}
-            {onDelete && (
-              <Tooltip label="Delete Job">
-                <ActionIcon variant="light" color="red" onClick={() => onDelete(job.id)}>
-                  <IconTrash size={16} />
-                </ActionIcon>
-              </Tooltip>
-            )}
-          </Group>
-        </Group>
-
-        <Group gap="xs">
-          <Badge color={getJobTypeColor(job.jobType)} variant="light">
-            {formatJobType(job.jobType)}
-          </Badge>
-          {isDeadlineSoon && (
-            <Badge color="red" variant="light">
-              Deadline Soon
+          <div>
+            <Badge
+              color={getJobTypeColor(job.jobType)}
+              variant="light"
+              sx={{
+                width: 75,
+                height: 33,
+                borderRadius: 10,
+                paddingTop: 7,
+                paddingRight: 10,
+                paddingBottom: 7,
+                paddingLeft: 10,
+                backgroundColor: "#B0D9FF",
+                color: "black",
+                fontWeight: 500,
+                gap: 10,
+                opacity: 1,
+                top: 16,
+                left: 222,
+              }}
+            >
+              24h Ago
             </Badge>
-          )}
+          </div>
+
         </Group>
 
-        <Group gap="md">
+        <Group gap="md" style={{justifyContent: 'space-between'}}>
           <Group gap="xs">
-            <IconMapPin size={16} color="gray" />
+            <GoPersonAdd size={16} color="gray" />
             <Text size="sm" c="dimmed">
-              {job.location || 'Location not specified'}
+              {'1-3 yr Exp'}
             </Text>
           </Group>
           <Group gap="xs">
-            <IconCurrencyDollar size={16} color="gray" />
+            <HiOutlineBuildingOffice2 size={16} color="gray" />
             <Text size="sm" c="dimmed">
-              {job.salaryRange || 'Salary not specified'}
+              {'Onsite'}
+            </Text>
+          </Group>
+          <Group gap="xs">
+            <IoIosApps size={16} color="gray" />
+            <Text size="sm" c="dimmed">
+              {job.salaryRange || '12LPA'}
             </Text>
           </Group>
         </Group>
@@ -133,25 +142,8 @@ console.log("job_data",job )
 
         <Divider />
 
-        <Group justify="space-between">
-          <Group gap="xs">
-            <IconCalendar size={16} color="gray" />
-            <Text size="xs" c="dimmed">
-              Deadline: {job.applicationDeadline 
-                ? dayjs(job.applicationDeadline).format('MMM DD, YYYY')
-                : 'Not specified'
-              }
-            </Text>
-          </Group>
-          <Text size="xs" c="dimmed">
-            Posted: {job.createdAt 
-              ? dayjs(job.createdAt).format('MMM DD, YYYY')
-              : 'Unknown'
-            }
-          </Text>
-        </Group>
-        
-        <Button radius={8}> Apply Now </Button>
+
+        <Button radius={8} style={{backgroundColor:'#00AAFF'}}> Apply Now </Button>
       </Stack>
     </Card>
   );

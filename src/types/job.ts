@@ -1,14 +1,11 @@
-// src/types/job.ts - Updated types
 export interface Job {
   id: string;
   title: string;
-  company: string;
+  companyName: string;
   location: string;
   jobType: 'full-time' | 'part-time' | 'contract' | 'internship';
   salaryRange: string;
-  description: string;
-  requirements: string;
-  responsibilities: string;
+  jobDescription: string;
   applicationDeadline: string;
   createdAt: string;
   updatedAt: string;
@@ -28,19 +25,17 @@ export interface CreateJobRequest {
   jobType?: 'full-time' | 'part-time' | 'contract' | 'internship'; // Optional in backend
   salaryRange?: string; // Optional in backend
   jobDescription?: string; // Backend expects 'jobDescription'
-  requirements?: string; // Optional in backend
-  responsibilities?: string; // Optional in backend
   applicationDeadline?: string; // Optional in backend, ISO string format
 }
 
 // For form handling (UI-friendly field names)
 export interface JobFormData {
   title: string;
-  company: string; // UI uses 'company'
+  companyName: string; // UI uses 'company'
   location: string;
   jobType: 'full-time' | 'part-time' | 'contract' | 'internship';
   salaryRange: string;
-  description: string; // UI uses 'description'
+  jobDescription: string; // UI uses 'description'
   requirements: string;
   responsibilities: string;
   applicationDeadline: string;

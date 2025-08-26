@@ -47,7 +47,9 @@ export function JobFiltersComponent({ onFiltersChange }: JobFiltersProps) {
 <Box
   style={{
     fontFamily: 'Satoshi Variable, sans-serif',
-    border: '1px solid #eaeaea',
+    // border: '1px solid #eaeaea',
+    // borderRadius: '12px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     borderRadius: '12px',
     backgroundColor: 'white',
     padding: '16px 24px',

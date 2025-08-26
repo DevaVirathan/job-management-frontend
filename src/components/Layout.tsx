@@ -83,7 +83,7 @@ export function Layout({ children }: LayoutProps) {
         </AppShell.Header>
 
       <AppShell.Main>
-        <Container size="xl">
+        <Container size="2xl">
           {children}
         </Container>
       </AppShell.Main>
