@@ -56,7 +56,11 @@ export function JobCard({ job, onEdit, onDelete, onView }: JobCardProps) {
 console.log("job_data",job )
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Stack gap="sm">
+      <Stack gap="md" style={{
+        flex: 1,
+        justifyContent:"center",
+        alignContent:"center"
+      }}>
         <Group justify="space-between" align="flex-start">
           <div style={{ flex: 1 }}>
             <Text fw={600} size="lg" lineClamp={2}>
@@ -118,7 +122,7 @@ console.log("job_data",job )
         </Group>
 
         <Text size="sm" c="dimmed" lineClamp={3}>
-          {job.description || 'No description available'}
+          {job.jobDescription || 'No description available'}
         </Text>
 
         <Divider />
@@ -140,6 +144,8 @@ console.log("job_data",job )
             }
           </Text>
         </Group>
+        
+        <Button radius={8}> Apply Now </Button>
       </Stack>
     </Card>
   );

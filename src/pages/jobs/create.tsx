@@ -81,8 +81,6 @@ export default function CreateJobPage() {
   };
 
   return (
-    <Layout>
-      <JobForm onSubmit={handleSubmit} loading={loading} />
-    </Layout>
+    <JobForm onSubmit={handleSubmit} loading={loading} />
   );
 }
