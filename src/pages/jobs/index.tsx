@@ -41,9 +41,7 @@ const JobsPage: React.FC = () => {
 
   return (
     <Container size="xl" py="md">
-      <Title order={2} mb="lg" ta="center">
-        Available Jobs
-      </Title>
+   
 
       <JobFiltersComponent onFiltersChange={handleFiltersChange} loading={loading} />
 
