@@ -131,7 +131,7 @@ export function JobCard({ job }: JobCardProps) {
           <Group gap="xs">
             <IoIosApps size={16} color="gray" />
             <Text size="sm" c="dimmed">
-              {job.salaryRange || '12LPA'}
+              {job.salaryRange + 'LPA' || '12LPA'}
             </Text>
           </Group>
         </Group>

@@ -1,4 +1,3 @@
-
 import {
   Group,
   TextInput,
@@ -18,10 +17,11 @@ import { JobFilters } from '@/types/job';
 
 interface JobFiltersProps {
   onFiltersChange: (filters: JobFilters) => void;
+  loading: boolean;
 }
 
 const JOB_TYPES = [
-  { value: 'Job Types', label: 'All Types' },
+  { value: 'Job Types', label: 'Job Types' },
   { value: 'full-time', label: 'Full-time' },
   { value: 'part-time', label: 'Part-time' },
   { value: 'contract', label: 'Contract' },

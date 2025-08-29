@@ -155,8 +155,34 @@ export function JobForm({ onSubmit, loading, initialData }: JobFormProps) {
             <Grid.Col span={{ base: 12, sm: 6 }}>
               <label>Salary Range</label>
               <Group grow>
-                <TextInput
-                  placeholder="₹ 0"
+                
+             <Controller
+                name="salaryRangeMin"
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                    placeholder="₹ 0 (Min)"
+                    leftSection={<LuArrowDownUp size={16} />}
+                    styles={{
+                      input: {
+                        height: "58px",
+                      borderRadius: "10px",
+                      border: "1px solid #222222",
+                      background: "#FFFFFF",
+                    },
+                  }}
+                  {...field}
+                />
+                )}
+              />
+
+
+              <Controller
+                name="salaryRange"
+                control={control}
+                render={({ field }) => (
+                  <TextInput
+                  placeholder="₹ 12,00,000 (Max)"
                   leftSection={<LuArrowDownUp size={16} />}
                   styles={{
                     input: {
@@ -166,19 +192,12 @@ export function JobForm({ onSubmit, loading, initialData }: JobFormProps) {
                       background: "#FFFFFF",
                     },
                   }}
+                  {...field}
                 />
-                <TextInput
-                  placeholder="₹ 12,00,000"
-                  leftSection={<LuArrowDownUp size={16} />}
-                  styles={{
-                    input: {
-                      height: "58px",
-                      borderRadius: "10px",
-                      border: "1px solid #222222",
-                      background: "#FFFFFF",
-                    },
-                  }}
-                />
+                )}
+              />
+
+               
               </Group>
             </Grid.Col>
 
@@ -210,19 +229,26 @@ export function JobForm({ onSubmit, loading, initialData }: JobFormProps) {
 
             {/* Job Description - full width */}
             <Grid.Col span={12}>
-              <Textarea
-                label="Job Description"
-                placeholder="Provide a description to let the candidate know more about the job role"
-                minRows={4}
-                error={errors.jobDescription?.message}
-                styles={{
-                  input: {
-                    borderRadius: "10px",
-                    border: "1px solid #222222",
-                    background: "#FFFFFF",
-                    height: "200px",
-                  },
-                }}
+              <Controller
+                name="jobDescription"
+                control={control}
+                render={({ field }) => (
+                  <Textarea
+                    label="Job Description"
+                    placeholder="Provide a description to let the candidate know more about the job role"
+                    minRows={4}
+                    error={errors.jobDescription?.message}
+                    {...field}
+                    styles={{
+                      input: {
+                        borderRadius: "10px",
+                        border: "1px solid #222222",
+                        background: "#FFFFFF",
+                        height: "200px",
+                      },
+                    }}
+                  />
+                )}
               />
             </Grid.Col>
 
